@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-
-
   </head>
+
   <body>
-    <h1>Tic Tac Toe</h1>
     <header class="scores">
       <div>
-        <label for="scoreplayerX"> PLAYER (X)</label>
+        <label for="scoreplayerX">PLAYER (X)</label>
         <span class="scoreValue" id="scoreplayerX">0</span>
       </div>
       <div>
-        <label for="scoreplayerX"> TIE (X)</label>
-        <span class="scoreValue" id="scoreplayerX">0</span>
+        <label for="scoreTie">TIE</label>
+        <span class="scoreValue" id="scoreTie">0</span>
       </div>
       <div>
-        <label for="scoreplayerX"> COMPUTER (O)</label>
-        <span class="scoreValue" id="scoreplayerX">0</span>
+        <label for="scoreplayerO">PLAYER (O)</label>
+        <span class="scoreValue" id="scoreplayer0">0</span>
+      </div>
+      <div>
+        <span for="toggleGameMode"></span>
+        <span class="scoreValue" id="toggleGameMode">0</span>
       </div>
     </header>
     <table id="board">
@@ -42,4 +45,5 @@
     </table>
     <script src="script.js"></script>
   </body>
+
 </html>

@@ -4,9 +4,25 @@ body {
   color: white;
 }
 
+.scores{
+  font-size: 2em;
+  justify-content:  center;
+  margin: auto;
+  width: 50%;
+  display: flex;
+  font-weight: bolder;
+}
+.scores div{
+  margin-right: 50px;
+}
+.scoreValue{
+  display: block;
+  text-align: center;
+}
+
 #board {
   border-collapse: collapse;
-  margin: 20px auto;
+  margin: 50px auto;
 }
 
 .square {
