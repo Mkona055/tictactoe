@@ -14,19 +14,21 @@
     <header class="scores">
       <div>
         <label for="scoreplayerX">PLAYER (X)</label>
-        <span class="scoreValue" id="scoreplayerX">0</span>
+        <span class="scoreValue" id="scorePlayerX">0</span>
       </div>
       <div>
         <label for="scoreTie">TIE</label>
         <span class="scoreValue" id="scoreTie">0</span>
       </div>
       <div>
-        <label for="scoreplayerO">PLAYER (O)</label>
-        <span class="scoreValue" id="scoreplayer0">0</span>
+        <label for="scoreplayerO" id="labelPlayerO">PLAYER (O)</label>
+        <span class="scoreValue" id="scorePlayerO">0</span>
       </div>
       <div>
-        <span for="toggleGameMode"></span>
-        <span class="scoreValue" id="toggleGameMode">0</span>
+        <span id="gameMode">2P</span>
+      </div>
+      <div id="restartButton">
+        <span><img src="assets/restart.svg"></span>
       </div>
     </header>
     <table id="board">
