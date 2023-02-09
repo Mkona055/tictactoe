@@ -3,6 +3,7 @@ window.onload = () => {
     const squares = document.querySelectorAll('.square');
     const gameMode = document.querySelector('#gameMode');
     const restart = document.querySelector('#restartButton');
+    const modal = document.querySelector('#myModal');
     var engine = TicTacToeEngine();
 
     for (const square of squares) {
@@ -14,15 +15,7 @@ window.onload = () => {
                     if (gameMode.textContent === "1P" && player === "X") {
                         player = engine.nextPlayer();
                         engine.computerPlay(squares);
-                        const winningCombination = engine.checkForWin(squares, player)
-                        if (winningCombination) {
-                            document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
-                            document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
-                            displayResult(winningCombination);
-                        } else if (engine.checkForDraw(squares)) {
-                            document.querySelector("#scoreTie").textContent = engine.scoreTie;
-                            displayResult();
-                        }
+                        gameHasFinished(squares, player);
                     }
                     engine.nextPlayer();
 
@@ -45,12 +38,11 @@ window.onload = () => {
     function gameHasFinished(squares, player) {
         const winningCombination = engine.checkForWin(squares, player)
         if (winningCombination) {
-            document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
-            document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
+            
             displayResult(winningCombination);
             return true;
         } else if (engine.checkForDraw(squares)) {
-            document.querySelector("#scoreTie").textContent = engine.scoreTie;
+            console.log(displayResult());
             return true;
         }
         return false;
@@ -85,9 +77,27 @@ window.onload = () => {
         document.querySelector("#scoreTie").textContent = engine.scoreTie;
     }
     function displayResult(winningCombination) {
+        if (winningCombination){
+            document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
+            document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
+            modal.children[0].textContent = `${winningCombination[0].textContent} WON !`;
+            for (let i = 0; i < winningCombination.length; i++) {
+                winningCombination[i].style.color = "yellow";
+            }
+        }else{
+            document.querySelector("#scoreTie").textContent = engine.scoreTie;
+            modal.children[0].textContent = " \n TIE ! \n";
 
-        for (let i = 0; i < winningCombination.length; i++) {
-            winningCombination[i].style.color = "yellow";
         }
+        modal.style.display = "block";
+
+        
+
     }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
 }
