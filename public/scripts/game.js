@@ -4,6 +4,10 @@ window.onload = () => {
     const gameMode = document.querySelector('#gameMode');
     const restart = document.querySelector('#restartButton');
     const modal = document.querySelector('#myModal');
+    const modalText = document.querySelector('#modal-text');
+    const close = document.querySelector('.close');
+
+
     var engine = TicTacToeEngine();
 
     for (const square of squares) {
@@ -32,6 +36,9 @@ window.onload = () => {
         fullReset();
     });
     restart.addEventListener('click', function () {
+        fullReset();
+    });
+    close.addEventListener('click', function () {
         fullReset();
     });
 
@@ -80,7 +87,7 @@ window.onload = () => {
         if (winningCombination){
             document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
             document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
-            modal.children[0].textContent = `${winningCombination[0].textContent} WON !`;
+            modalText.textContent = `${winningCombination[0].textContent} WON !`;
             for (let i = 0; i < winningCombination.length; i++) {
                 winningCombination[i].style.color = "yellow";
             }
@@ -96,7 +103,7 @@ window.onload = () => {
     }
 
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target == modal || event.target == close) {
           modal.style.display = "none";
         }
       }
