@@ -57,6 +57,7 @@ body {
 #restartButton{
   cursor: pointer;
 }
+
 @media screen and (max-width: 1400px) {
   .scores{
     font-size: 1.5em;

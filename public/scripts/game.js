@@ -38,9 +38,7 @@ window.onload = () => {
     restart.addEventListener('click', function () {
         fullReset();
     });
-    close.addEventListener('click', function () {
-        fullReset();
-    });
+
 
     function gameHasFinished(squares, player) {
         const winningCombination = engine.checkForWin(squares, player)
@@ -84,22 +82,20 @@ window.onload = () => {
         document.querySelector("#scoreTie").textContent = engine.scoreTie;
     }
     function displayResult(winningCombination) {
+        console.log(winningCombination);
         if (winningCombination){
             document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
             document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
             modalText.textContent = `${winningCombination[0].textContent} WON !`;
+            console.log(modalText.textContent);
             for (let i = 0; i < winningCombination.length; i++) {
                 winningCombination[i].style.color = "yellow";
             }
         }else{
             document.querySelector("#scoreTie").textContent = engine.scoreTie;
-            modal.children[0].textContent = " \n TIE ! \n";
-
+            modalText.textContent = `TIE !`;
         }
         modal.style.display = "block";
-
-        
-
     }
 
     window.onclick = function(event) {
