@@ -12,7 +12,7 @@ The goal of this document it to explain to a common developper how to build a Ti
 
 
 | Colors name | Look and feels |
-|--|--|--|
+|--|--|
 |`#ffffff`|<img style="width:20px; height:20px; border:1px solid black;background-color:#ffffff;" src="./assets/white.png">| 
 |`#000000`|<img style="width:20px; height:20px; border:1px solid black;background-color:#ffffff;" src="./assets/black.png">| 
 |`#ffff00`|<img style="width:20px; height:20px; border:1px solid black;background-color:#ffffff;" src="./assets/yellow.png">| 
