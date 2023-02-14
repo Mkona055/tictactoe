@@ -1,6 +1,6 @@
 # Design system
 
-The goal of this document it to explain to a common developper how to build a Tic Tac Toe Game with two different playing modes (1 player and 2 players).
+The goal of this document it to explain to a common developper how to design a Tic Tac Toe Game with two different playing modes (1 player and 2 players).
 
 ## Fonts and Colors
 
@@ -74,7 +74,7 @@ Also lets take note of the `#gameMode` `span` everytime this button is clicked i
       </div>
     </header>
 ```
-![header](../assets/scores.png)
+![header](./assets/scores.png)
 
 Now regarding the style, all items are displayed inline and centered. This is because we are using `span` elements. Moreover, they are also displayed with space between one another (approximately 50 px). 
 
@@ -128,7 +128,7 @@ The TicTacToe board is a simple board 3 x 3 board, thus we have 3 `<tr>` rows wi
 
 To make the a squares have the same size, we need to set the width and height to the same values. Also, every X an O placed in the square  must be centered. To represent a square with a missing border it is sufficient to set the border side as 0px.
 
-![board](../assets/board.png)
+![board](./assets/board.png)
 
 ```css
     .square {
@@ -160,16 +160,5 @@ To make the a squares have the same size, we need to set the width and height to
 ```
 
 
-### Events and Calculations scripts
-
-In the `scripts/` folder you will find 2 files named `engine.js` and `game.js.` The `engine.js`  is responsible of all the calculations while `game.js` represents the game state. 
-
-#### Tic Tac Toe Engine
-
-The engine is declared as a variable with several attributes defined as methods to `updateScore` `checkForWin`, `checkForDraw`, get the `nextPlayer`, reset the game, reset the game and scores. To represent the scores it needs attributes to represents the number of ties, wons of player X and player O. 
-
-When `checkForWin` or `checkForDraw` the engine increases the number of wins of the current player, or the number of ties. It does not return `true` or `false` if there is a win but the winning combination so that the `game.js` can represesent the victorious alignment.
-
-#### Tic Tac Toe Game State
 
 
