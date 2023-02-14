@@ -13,7 +13,7 @@ The goal of this document it to explain to a common developper how to build a Ti
 
 
 | Colors name | Look and feels |
-|--|--|--|
+| -- | -- |
 |`#ffffff`|<div style="width:20px; height:20px; border:1px solid black;background-color:#ffffff;"></div>| 
 |`#000000`|<div style="width:20px; height:20px; border:1px solid black;background-color:#000000;"></div>| 
 |`#ffff00`|<div style="width:20px; height:20px; border:1px solid black;background-color:#ffff00;"></div>| 
@@ -75,7 +75,7 @@ Also lets take note of the `#gameMode` `span` everytime this button is clicked i
       </div>
     </header>
 ```
-![header](../../assets/scores.png)
+![header](../assets/scores.png)
 
 Now regarding the style, all items are displayed inline and centered. This is because we are using `span` elements. Moreover, they are also displayed with space between one another (approximately 50 px). 
 
@@ -129,7 +129,7 @@ The TicTacToe board is a simple board 3 x 3 board, thus we have 3 `<tr>` rows wi
 
 To make the a squares have the same size, we need to set the width and height to the same values. Also, every X an O placed in the square  must be centered. To represent a square with a missing border it is sufficient to set the border side as 0px.
 
-![header](../../assets/board.png)
+![board](../assets/board.png)
 
 ```css
     .square {
