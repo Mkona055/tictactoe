@@ -9,11 +9,11 @@
 
 3. The first player to get 3 of her marks in a row (up, down, across, or diagonally) is the winner.
 
-![winImage](.public/winState.png)
+![winImage](./public/assets/winState.png)
 
-4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.
+1. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.
 
-![tieImage](.public/tieImage.png)
+![tieImage](./public/assets/tieState.png)
 
 
 ## System design
