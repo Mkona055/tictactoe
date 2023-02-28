@@ -29,6 +29,7 @@ spl_autoload_register(function ($fullName) {
     if (file_exists($GLOBALS["appDir"] . "/models/{$className}.php"))
     {
       require_once $GLOBALS["appDir"] . "/models/{$className}.php";
+      $path = $GLOBALS["appDir"] . "/models/{$className}.php";
     }
 });
 
