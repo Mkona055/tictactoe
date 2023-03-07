@@ -1,28 +1,14 @@
 <?php
-
 require_once('_config.php');
-
-use TicTacToe\TicTacToeEngine;
-
-$engine = new TicTacToeEngine();
-
-
-$squares = ["X", "X", "X", 
-            "O", "O", "X ", 
-            "O" ,"X ","O"];
-
-echo "BOARD <br><br>";
-for ($i = 0 ; $i < sizeof($squares) ; $i = $i + 3){
-    echo "{$squares[$i]} {$squares[$i+1]} {$squares[$i+2]}<br>";
-}
-$player = "X";
-echo "PLAYER: {$player}<br><br>";
-
-$checkForWin = $engine->checkForWin($squares, $player);
-$checkForWinString = implode(" ",$checkForWin);
-
-echo "WINNING INDEXES: <br>";
-echo "checkForWin : {$checkForWinString }";
-
-
 ?>
+
+<div id="output">--</div>
+<button id="version">Version</button>
+
+<script>
+const output = document.getElementById("output");
+const version = document.getElementById("version");
+version.onclick = function(e) {
+  output.innerHTML = "Look up version clicked";
+}
+</script>

@@ -12,7 +12,7 @@ window.onload = () => {
 
     for (const square of squares) {
         square.addEventListener('click', function () {
-            player = engine.currPlayer;
+            player = engine.currPlayer;   // get NextPlayer
             if (square.textContent === "" && !engine.gameFinished) {
                 square.textContent = player;
                 if (!gameHasFinished(squares, player)) {
