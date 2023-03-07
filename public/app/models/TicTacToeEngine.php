@@ -1,16 +1,22 @@
 <?php
 
 namespace TicTacToe;
+use TicTacToe\TicTacToeGame;
 
 class TicTacToeEngine{
 
-    
+    public $activeGames = [];
     public $currPlayer = "X";
     public $scoreTie = 0 ;
     public $scorePlayerO = 0; 
     public $scorePlayerX = 0;
     public $gameFinished = false;
     
+    function newGame(){
+        $activeGame = new TicTacToeGame();
+        $this->$activeGames[] = $activeGame;
+        return $activeGame ->id ;
+    }
     function updateScore($player) {
         if ($player === "X") {
             $this->scorePlayerX += 1;
@@ -68,12 +74,13 @@ class TicTacToeEngine{
     //     engine.scoreTie++;
     //     return true;
     // }
-    // engine.nextPlayer = function nextPlayer() {
-    //     if (engine.currPlayer === "X") {
-    //         engine.currPlayer = "O";
-    //     } else {
-    //         engine.currPlayer = "X";
-    //     }
+    function nextPlayer() {
+        if (currPlayer === "X") {
+            engine.currPlayer = "O";
+        } else {
+            engine.currPlayer = "X";
+        }
+    }
 
     //     return this.currPlayer;
     // }
