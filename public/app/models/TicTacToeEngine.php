@@ -5,19 +5,35 @@ use TicTacToe\TicTacToeGame;
 
 class TicTacToeEngine{
 
-    public $activeGames = [];
-    public $currPlayer = "X";
-    public $scoreTie = 0 ;
-    public $scorePlayerO = 0; 
-    public $scorePlayerX = 0;
-    public $gameFinished = false;
-    
+    public $activeGames;
+    function __construct(){
+
+        $this->activeGames = [];
+    }
+
     function newGame(){
         $activeGame = new TicTacToeGame();
-        $this->$activeGames[] = $activeGame;
-        return $activeGame ->id ;
+        $id = $activeGame->id;
+        $this->activeGames[$id] = $activeGame;
+        return $id ;
     }
-    function updateScore($player) {
+    function nextPlayer($gameId){
+        
+        print(gettype($gameId));
+        $game = $this->activeGames[$gameId];
+        $currPlayer = $game->currPlayer ;
+        if ($currPlayer == "X") {
+            $game->currPlayer = "O";
+        } else {
+            $game->currPlayer = "X";
+        }
+        $this->activeGames[$gameId] = $game;
+        return $game->currPlayer ;
+    }
+    function getGame($gameId){
+        return $this->activeGames[$gameId];
+    }
+    /*function updateScore($player) {
         if ($player === "X") {
             $this->scorePlayerX += 1;
         } else {
@@ -74,13 +90,13 @@ class TicTacToeEngine{
     //     engine.scoreTie++;
     //     return true;
     // }
-    function nextPlayer() {
-        if (currPlayer === "X") {
-            engine.currPlayer = "O";
-        } else {
-            engine.currPlayer = "X";
-        }
-    }
+    // function nextPlayer() {
+    //     if (currPlayer === "X") {
+    //         engine.currPlayer = "O";
+    //     } else {
+    //         engine.currPlayer = "X";
+    //     }
+    // }
 
     //     return this.currPlayer;
     // }
@@ -108,6 +124,6 @@ class TicTacToeEngine{
 
 
     // return engine;
+    */
 } 
 
-?>

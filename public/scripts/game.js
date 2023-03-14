@@ -6,9 +6,36 @@ window.onload = () => {
     const modal = document.querySelector('#myModal');
     const modalText = document.querySelector('#modal-text');
     const close = document.querySelector('.close');
+   
+    const button = document.getElementById('newGame');        
+    var gameData;
 
+    button.onclick = () => {
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/new`,
+            success: function(game) {
+                gameData = game;        
+                console.log(gameData);
 
-    var engine = TicTacToeEngine();
+            }
+        });
+    };
+    const button2 = document.getElementById('nextPlayer');
+    button2.onclick = () => {        
+        console.log('clicked');
+
+        console.log($.ajax({
+            type: "GET",
+            url: `/api.php?action=/nextPlayer`,
+            success: function(game) {
+                console.log(game);
+            }
+        }));
+
+    };
+
+    var game = TicTacToeEngine();
 
     for (const square of squares) {
         square.addEventListener('click', function () {
