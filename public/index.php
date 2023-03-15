@@ -16,8 +16,6 @@
   </head>
 
   <body>
-    <button id="newGame">NEW GME</button>
-    <button id="nextPlayer">NECT PLAYEr GME</button>
 
     <header class="scores">
       <div>
