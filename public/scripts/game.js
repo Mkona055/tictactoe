@@ -6,53 +6,29 @@ window.onload = () => {
     const modal = document.querySelector('#myModal');
     const modalText = document.querySelector('#modal-text');
     const close = document.querySelector('.close');
-   
-    const button = document.getElementById('newGame');        
-    var gameData;
+    var engine = TicTacToeEngine();
+    engine.initGame();
 
-    button.onclick = () => {
-        $.ajax({
-            type: "GET",
-            url: `/api.php?action=/new`,
-            success: function(game) {
-                gameData = game;        
-                console.log(gameData);
-
-            }
-        });
-    };
-    const button2 = document.getElementById('nextPlayer');
-    button2.onclick = () => {        
-        console.log('clicked');
-
-        console.log($.ajax({
-            type: "GET",
-            url: `/api.php?action=/nextPlayer`,
-            success: function(game) {
-                console.log(game);
-            }
-        }));
-
-    };
-
-    var game = TicTacToeEngine();
-
-    for (const square of squares) {
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i];
         square.addEventListener('click', function () {
-            player = engine.currPlayer;   // get NextPlayer
-            if (square.textContent === "" && !engine.gameFinished) {
-                square.textContent = player;
-                if (!gameHasFinished(squares, player)) {
-                    if (gameMode.textContent === "1P" && player === "X") {
-                        player = engine.nextPlayer();
-                        engine.computerPlay(squares);
-                        gameHasFinished(squares, player);
+            player = engine.gameState["currPlayer"];   
+            if (square.textContent === "" && !engine.gameState["gameFinished"]) {
+                engine.play(squares, player, i)
+                gameHasFinished(squares, player).then((result) => {
+                    if (result !== true) {
+                        if (gameMode.textContent === "1P" && player === "X") {
+                            engine.computerPlay(squares);
+                            gameHasFinished(squares, "O");
+                        }else{
+                            engine.nextPlayer();
+                        }
+                        
+
                     }
-                    engine.nextPlayer();
+                });
 
-
-                }
-            } else if (engine.gameFinished) {
+            } else if (engine.gameState["gameFinished"]) {
                 softReset();
             }
         });
@@ -67,17 +43,31 @@ window.onload = () => {
     });
 
 
-    function gameHasFinished(squares, player) {
-        const winningCombination = engine.checkForWin(squares, player)
-        if (winningCombination) {
-            
-            displayResult(winningCombination);
-            return true;
-        } else if (engine.checkForDraw(squares)) {
-            console.log(displayResult());
-            return true;
-        }
-        return false;
+     function gameHasFinished(squares, player) {
+
+        return engine.checkForWin(squares, player).then(data => {
+            const res = data.res;
+            if (data.res != null){
+                const winningCombination = [squares[res[0]], squares[res[1]], squares[res[2]]]  ; 
+                engine.updateGameState().then(() => {
+                    displayResult(winningCombination);
+                })
+                return true;
+            }else  {
+                return engine.checkForDraw(squares).then(data => {
+                    const res = data.res;
+                    if (res){
+                        engine.updateGameState().then(() => {
+                            displayResult();
+                        })
+                        return true;
+                    }else{
+                        return false;
+                    }
+                })
+
+            }
+        });
     }
     function toggleMode() {
         if (gameMode.textContent == "2P") {
@@ -103,26 +93,28 @@ window.onload = () => {
             square.textContent = "";
             square.style.color = "white";
         };
-        engine.fullReset();
-        document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
-        document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
-        document.querySelector("#scoreTie").textContent = engine.scoreTie;
+        engine.fullReset()
+        engine.updateGameState().then(() =>{
+            document.querySelector("#scorePlayerX").textContent = engine.gameState["scorePlayerX"];
+            document.querySelector("#scorePlayerO").textContent = engine.gameState["scorePlayerO"];
+            document.querySelector("#scoreTie").textContent = engine.gameState["scoreTie"];
+        });
+
     }
     function displayResult(winningCombination) {
-        console.log(winningCombination);
         if (winningCombination){
-            document.querySelector("#scorePlayerX").textContent = engine.scorePlayerX;
-            document.querySelector("#scorePlayerO").textContent = engine.scorePlayerO;
+            document.querySelector("#scorePlayerX").textContent = engine.gameState["scorePlayerX"];
+            document.querySelector("#scorePlayerO").textContent = engine.gameState["scorePlayerO"];
             modalText.textContent = `${winningCombination[0].textContent} WON !`;
-            console.log(modalText.textContent);
             for (let i = 0; i < winningCombination.length; i++) {
                 winningCombination[i].style.color = "yellow";
             }
         }else{
-            document.querySelector("#scoreTie").textContent = engine.scoreTie;
+            document.querySelector("#scoreTie").textContent = engine.gameState["scoreTie"];
             modalText.textContent = `TIE !`;
         }
         modal.style.display = "block";
+        engine.delay(2000).then(() => { modal.style.display = "none";});
     }
 
     window.onclick = function(event) {
