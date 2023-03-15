@@ -96,8 +96,8 @@ window.onload = () => {
             square.style.color = "white";
         }
         engine.softReset();
-
     }
+    
     function fullReset() {
         for (const square of squares) {
             square.textContent = "";
