@@ -1,99 +1,101 @@
-var TicTacToeEngine = function engine() {
+var TicTacToeEngine = function () {
     let engine = {
-        currPlayer: "X",
-        scoreTie: 0,
-        scorePlayerO: 0,
-        scorePlayerX: 0,
-        gameFinished: false,
-    }
-    function updateScore(player) {
-        if (player === "X") {
-            engine.scorePlayerX++;
-        } else {
-            engine.scorePlayerO++;
-        }
-    }
-    function delay(time) {
+        gameState:{}
+    }  
+    engine.delay = function (time) {
         return new Promise(resolve => setTimeout(resolve, time));
     }
-    engine.checkForWin = function checkForWin(squares, player) {
-        // Check rows
-        for (let i = 0; i < 9; i += 3) {
-            if (squares[i].textContent === player &&
-                squares[i + 1].textContent === player &&
-                squares[i + 2].textContent === player) {
-                engine.gameFinished = true;
-                updateScore(player)
-                return [squares[i], squares[i + 1], squares[i + 2]];
+    engine.updateGameState = function updateGameState() {
+        return $.ajax({
+            type: "GET",
+            url: `/api.php?action=/gameState`,
+            success: function(game) {
+                engine.gameState = game;        
             }
-        }
-        // Check columns
-        for (let i = 0; i < 3; i++) {
-            if (squares[i].textContent === player &&
-                squares[i + 3].textContent === player &&
-                squares[i + 6].textContent === player) {
-                engine.gameFinished = true;
-                updateScore(player)
-                return [squares[i], squares[i + 3], squares[i + 6]];
-            }
-        }
-        // Check diagonals
-        if (squares[0].textContent === player &&
-            squares[4].textContent === player &&
-            squares[8].textContent === player) {
-            engine.gameFinished = true;
-            updateScore(player)
-            return [squares[0], squares[4], squares[8]];
-        }
-        if (squares[2].textContent === player &&
-            squares[4].textContent === player &&
-            squares[6].textContent === player) {
-            engine.gameFinished = true;
-
-            updateScore(player)
-            return [squares[2], squares[4], squares[6]];
-        }
-        return null;
+        });
     }
-    engine.checkForDraw = function checkForDraw(squares) {
-        for (const square of squares) {
-            if (square.textContent === "") {
-                return false;
+    engine.initGame = function initGame() {
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/new`,
+            success: function(game) {
+                engine.gameState = game;        
             }
-        }
-        engine.gameFinished = true;
-        engine.scoreTie++;
-        return true;
+        });
+    }
+  
+    engine.checkForWin = function checkForWin(squares, player) {
+        return $.ajax({
+            type: "GET",
+            url: `/api.php?action=/checkForWin&player=${player}`,
+            success: function(data) {        
+                let result = data.res;
+                if (result == null) {
+                    return null;
+                }
+                return [squares[result[0]], squares[result[1]], squares[result[2]]]  ;     
+            }
+        });
+    }
+    engine.checkForDraw = function checkForDraw() {
+        return $.ajax({
+            type: "GET",
+            url: `/api.php?action=/checkForDraw`,
+            success: function(data) {
+                return data.res    
+            }
+        });
+
     }
     engine.nextPlayer = function nextPlayer() {
-        if (engine.currPlayer === "X") {
-            engine.currPlayer = "O";
-        } else {
-            engine.currPlayer = "X";
-        }
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/nextPlayer`,
+            success: function(data) {
+                engine.updateGameState();
+                return data.res    
+            }
+        });
 
-        return this.currPlayer;
     }
     engine.softReset = function softReset() {
-        engine.currPlayer = "X";
-        engine.gameFinished = false;
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/softReset`,
+            success: function(data) {
+                engine.updateGameState();
+            }
+        });
     }
     engine.fullReset = function fullReset() {
-        engine.softReset()
-        engine.scoreTie = 0;
-        engine.scorePlayerO = 0;
-        engine.scorePlayerX = 0;
+        return $.ajax({
+            type: "GET",
+            url: `/api.php?action=/fullReset`,
+            success: function(data) {
+                engine.updateGameState();
+            }
+        });
     }
     
-    engine.computerPlay = async function randomPlay(squares) {
-        let emptySquares = [];
-        for (let i = 0; i < squares.length; i++) {
-            if (squares[i].textContent === "") {
-                emptySquares.push(squares[i]);
+    engine.computerPlay =  function (squares) {
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/computerPlay`,
+            success: function(data) {
+                engine.updateGameState();
+                squares[data.res].textContent = 'O';
             }
-        }
-        let randomSquareIndex = Math.floor(Math.random() * emptySquares.length);
-        emptySquares[randomSquareIndex].textContent = engine.currPlayer;
+        });
+    }
+    engine.play =  function (squares, player, position) {
+        $.ajax({
+            type: "GET",
+            url: `/api.php?action=/play&position=${position}&player=${player}`,
+            success: function(data) {
+                engine.updateGameState();
+                squares[position].textContent = player;
+            }
+        });
     }
 
 
