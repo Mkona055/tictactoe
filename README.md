@@ -1,5 +1,12 @@
 # Tic Tac Toe
 
+## Start the game
+
+1- Clone the repository on your local machine 
+
+2- Go to the public directory `cd public`
+
+3- Run `php -S localhost:4000`
 
 ## Rules
 
